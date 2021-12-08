@@ -1,0 +1,17 @@
+FROM golang:1.17
+
+WORKDIR /go/src
+
+RUN apt-get update && apt-get install sqlite3 -y
+
+RUN mkdir app
+
+RUN touch test.db
+
+COPY . .
+
+RUN go build -o app ./...
+
+RUN ./app/cmd
+
+CMD ["tail", "-f", "/dev/null"]
